@@ -11,7 +11,7 @@ define root view entity z349_c_travel_578
   key TravelUUID,
       //definiendo elementos sobre los cuales buscar el mismo que se visualizará en la UI
       @Search.defaultSearchElement: true
-      TravelID,
+      TravelID, 
       @Search.defaultSearchElement: true
       @ObjectModel.text.element: [ 'AgencyName' ]
       //vinculando la AYUDA de BUSQUEDA para el AgencyID, asimismo, se asegura que lo ingresado por el usuario
@@ -21,16 +21,30 @@ define root view entity z349_c_travel_578
                                                                       useForValidation: true }]
       AgencyID,
       _Agency.Name as AgencyName, 
+      @Search.defaultSearchElement: true
+      @ObjectModel.text.element: [ 'CustomerName' ]      
+      @Consumption.valueHelpDefinition: [{  entity: { name: '/DMO/I_Customer_StdVH',
+                                                                                element: 'CustomerID' }, 
+                                                                      useForValidation: true }]      
       CustomerID,
+      _Customer.LastName as CustomerName,
       BeginDate,
       EndDate,
       @Semantics.amount.currencyCode: 'CurrencyCode'
       BookingFee,
       @Semantics.amount.currencyCode: 'CurrencyCode'
       TotalPrice,
+      @Consumption.valueHelpDefinition: [{  entity: { name: 'I_Currency',
+                                                                                element: 'Currency' }, 
+                                                                      useForValidation: true }]      
       CurrencyCode,
       Description,
+      @ObjectModel.text.element: [ 'OverallStatusText' ]      
+      @Consumption.valueHelpDefinition: [{  entity: { name: '/DMO/I_Overall_Status_VH',
+                                                                                element: 'OverallStatus' }, 
+                                                                      useForValidation: true }]      
       OverallStatus,
+      _OverStatus._Text.Text as OverallStatusText : localized, 
       LocalCreatedBy,
       LocalCreatedAt,
       LocalLastChangedBy,
@@ -38,7 +52,7 @@ define root view entity z349_c_travel_578
       LastChangedAt,
       /* Associations */
       _Agency,
-      _Booking,
+      _Booking : redirected to composition child z349_c_booking_578, 
       _Currency,
       _Customer,
       _OverStatus
